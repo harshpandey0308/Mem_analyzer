@@ -2,6 +2,7 @@
 #define PROCESS_DATA_HPP
 
 #include<unistd.h>
+#include<cstdint>
 
 typedef struct Process_Identity{
        pid_t PID;                  // Process ID 
@@ -23,6 +24,7 @@ typedef struct Raw_Data{
        pid_t pid;                            // Process PID 
        pid_t ppid;                           // process's parent id
        char *proc_name;                      // process name
+       proc_state state;                     // process state
 
        uint64_t RSS;                         // Resident Set Size - physical memory currently occupied by the process
        uint64_t Vmsize;                      // Virtual Memory Size - total virtual address space acquired by the process
@@ -31,6 +33,9 @@ typedef struct Raw_Data{
        uint64_t Rss_File;
        uint64_t Rss_Shmmem;
 }Raw_data;
+
+
+int extract_info();
        
 
 #endif
