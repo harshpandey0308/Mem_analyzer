@@ -1,6 +1,7 @@
 #include<iostream>
 #include<cstdlib>
 #include<fstream>
+#include<vector>
 #include<string>
 #include"../include/process_data.hpp"
 
@@ -8,14 +9,25 @@
 using namespace std;
 
 int extract_info(){
-    system("touch new.txt && grep -n 7 /proc/meminfo >> new.txt");
+    int count = 0;
+
+    system("touch new.txt && ps -ef >> new.txt");
 
     std::ifstream file("new.txt");
+
+    std::vector<int> pid;
 
     std::string line;
 
     while(std::getline(file , line)){
-        cout<<"Line 1 : "<<line<<endl;
+        cout<<"Line  : "<<line<<endl;
+        count++;
+    }
+
+    cout<<"\n"<<"the total line is "<<count<<endl;
+
+    for(int i=0 ; i<5; i++){
+        if()
     }
 
     file.close();
