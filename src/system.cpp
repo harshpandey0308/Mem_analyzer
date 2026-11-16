@@ -13,12 +13,17 @@ using namespace std;
 void parse_line(std::string line){
     size_t length = line.length();
 
-    for(size_t i=0 ; i<length ; i++){
-        if(line.at(i) == 'P'){
-            cout<<"the pid parameter is at "<<i<<endl;
-        }
-    }
+    std::vector<string> parm;
 
+    for(size_t i=0 ; i<length ; i++){
+        while(line.at(i) != " "){
+            parm.push_back(line.at(i));
+            i++;
+        }
+        i--;
+        cout<<parm;
+    }
+    
 }
 
 int extract_info(){
@@ -30,7 +35,7 @@ int extract_info(){
 
     std::vector<int> pid;
 
-    std::string line;
+    std::string line ;
 
     std::getline(file , line);
 
@@ -42,7 +47,6 @@ int extract_info(){
 
     Process_Identity proc_info[PROC_ARITY];
     size_t proc_count = 0;
-
 
 
     file.close();
