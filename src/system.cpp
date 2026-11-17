@@ -15,13 +15,16 @@ void parse_line(std::string line){
 
     std::vector<string> parm;
 
-    for(size_t i=0 ; i<length ; i++){
-        while(line.at(i) != " "){
-            parm.push_back(line.at(i));
+    std::string word;
+
+    for(size_t i=0 ; i<5 ; i++){
+        while(line.at(i) != ' '){
+            word.push_back(line.at(i));
             i++;
         }
         i--;
-        cout<<parm;
+
+        cout<<"the word is "<<word<<endl;
     }
     
 }
@@ -37,13 +40,13 @@ int extract_info(){
 
     std::string line ;
 
-    std::getline(file , line);
+    while(std::getline(file , line)){
+        parse_line(line);
 
-    parse_line(line);
+        cout<<line<<endl;
+    }
 
-    cout<<line<<endl;
-
-    cout<<"\n"<<"the total line is "<<count<<endl;
+    //cout<<"\n"<<"the total line is "<<count<<endl;
 
     Process_Identity proc_info[PROC_ARITY];
     size_t proc_count = 0;
