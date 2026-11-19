@@ -10,33 +10,10 @@
 
 using namespace std;
 
-void parse_line(std::string line){
-    size_t length = line.length();
-
-    std::vector<string> parm;
-
-    std::string word;
-
-    word.capacity(50);
-
-    for(size_t i=0 ; i<length ; i++){
-        size_t j = i;
-        while(line.at(j) != ' '){
-            word.push_back(line.at(j));
-            j++;
-        }
-        
-        i = j;
-
-        cout<<word<<endl;
-    }
-    
-}
-
 int extract_info(){
-    //int count = 0;
+    int count = 0;
 
-    system("touch new.txt && ps -ef >> new.txt");
+    system("touch new.txt && ps -eo pid,ppid,stime >> new.txt");
 
     std::ifstream file("new.txt");
 
@@ -45,17 +22,21 @@ int extract_info(){
     std::string line ;
 
     while(std::getline(file , line)){
-        parse_line(line);
-
+        auto offs = file.tellg();
+        cout<<"offs = "<<offs<<endl;
         cout<<line<<endl;
+        count++;
     }
+
+    file.seekg(0 , ios::beg);
 
     //cout<<"\n"<<"the total line is "<<count<<endl;
 
     //Process_Identity proc_info[PROC_ARITY];
     //size_t proc_count = 0;
 
-
+    file.seekg(44 , ios::beg);
+    
     file.close();
 
     return 0;
