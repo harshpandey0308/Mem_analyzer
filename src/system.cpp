@@ -17,20 +17,24 @@ void parse_line(std::string line){
 
     std::string word;
 
-    for(size_t i=0 ; i<5 ; i++){
-        while(line.at(i) != ' '){
-            word.push_back(line.at(i));
-            i++;
-        }
-        i--;
+    word.capacity(50);
 
-        cout<<"the word is "<<word<<endl;
+    for(size_t i=0 ; i<length ; i++){
+        size_t j = i;
+        while(line.at(j) != ' '){
+            word.push_back(line.at(j));
+            j++;
+        }
+        
+        i = j;
+
+        cout<<word<<endl;
     }
     
 }
 
 int extract_info(){
-    int count = 0;
+    //int count = 0;
 
     system("touch new.txt && ps -ef >> new.txt");
 
@@ -48,8 +52,8 @@ int extract_info(){
 
     //cout<<"\n"<<"the total line is "<<count<<endl;
 
-    Process_Identity proc_info[PROC_ARITY];
-    size_t proc_count = 0;
+    //Process_Identity proc_info[PROC_ARITY];
+    //size_t proc_count = 0;
 
 
     file.close();
