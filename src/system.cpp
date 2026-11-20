@@ -13,29 +13,40 @@ using namespace std;
 int extract_info(){
     int count = 0;
 
-    system("touch new.txt && ps -eo pid,ppid,stime >> new.txt");
+    system("touch new.txt && ps -eo pid >> new.txt");
 
     std::ifstream file("new.txt");
 
-    std::vector<int> pid;
+    //std::vector<int> pid;
 
     std::string line ;
 
+    Process_Identity proc_info[PROC_ARITY];
+    size_t proc_count = 0;
+
+    file.seekg(8 , ios::beg);
+
     while(std::getline(file , line)){
-        auto offs = file.tellg();
-        cout<<"offs = "<<offs<<endl;
-        cout<<line<<endl;
+        //auto offs = file.tellg();
+        //cout<<"offs = "<<offs<<endl;
+        proc_info[proc_count++].PID = static_cast<pid_t>(std::stoi(line));
+        if(proc_count >= PROC_ARITY){
+            break;
+        }
+        //cout<<line<<endl;
         count++;
     }
 
-    file.seekg(0 , ios::beg);
+    cout<<"PID"<<endl;
+    for(size_t i=0 ; i<proc_count ; i++){
+        cout<<proc_info[i].PID<<endl;
+    }
 
-    //cout<<"\n"<<"the total line is "<<count<<endl;
+    system("ps -eo stime >> new.txt");
 
-    //Process_Identity proc_info[PROC_ARITY];
-    //size_t proc_count = 0;
+    std::ifstream file1("new.txt");
 
-    file.seekg(44 , ios::beg);
+    std::string line1;
     
     file.close();
 
