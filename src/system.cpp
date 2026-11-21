@@ -27,8 +27,8 @@ int extract_info(){
     file.seekg(8 , ios::beg);
 
     while(std::getline(file , line)){
-        //auto offs = file.tellg();
-        //cout<<"offs = "<<offs<<endl;
+        auto offs = file.tellg();
+        cout<<"offs = "<<offs<<endl;
         proc_info[proc_count++].PID = static_cast<pid_t>(std::stoi(line));
         if(proc_count >= PROC_ARITY){
             break;
@@ -40,14 +40,25 @@ int extract_info(){
     cout<<"PID"<<endl;
     for(size_t i=0 ; i<proc_count ; i++){
         cout<<proc_info[i].PID<<endl;
+        system("/proc/proc_info[i].PID/stat >> new.txt");
     }
 
-    system("ps -eo stime >> new.txt");
-
-    std::ifstream file1("new.txt");
+    file.clear();
 
     std::string line1;
+
+    file.seekg(8 , ios::beg);
+
+    auto pos = file.tellg();
     
+    cout<<"file offset position : "<<pos<<endl;
+
+    proc_count = 0;
+
+    while(std::getline(file , line1)){
+        proc_info[proc_count++].
+    }
+
     file.close();
 
     return 0;
