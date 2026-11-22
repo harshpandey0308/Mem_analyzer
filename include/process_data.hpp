@@ -24,7 +24,7 @@ typedef struct Raw_Data{
        pid_t pid;                            // Process PID 
        pid_t ppid;                           // process's parent id
        char *proc_name;                      // process name
-       proc_state state;                     // process state
+       char state;                     // process state
 
        uint64_t RSS;                         // Resident Set Size - physical memory currently occupied by the process
        uint64_t Vmsize;                      // Virtual Memory Size - total virtual address space acquired by the process
@@ -32,7 +32,7 @@ typedef struct Raw_Data{
        uint64_t RSS_anon;
        uint64_t Rss_File;
        uint64_t Rss_Shmmem;
-}Raw_data;
+}Raw_Data;
 
 
 int extract_info();
