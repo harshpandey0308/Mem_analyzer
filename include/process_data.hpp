@@ -6,7 +6,7 @@
 
 typedef struct Process_Identity{
        pid_t PID;                  // Process ID 
-       uint64_t start_time;        // Helps to know the beginning of a process and also helps recognise to different process with same pid
+       uint64_t e_time;        // Helps to know the beginning of a process and also helps recognise to different process with same pid
 }Process_Identity;
 
 typedef enum state{
