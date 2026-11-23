@@ -3,6 +3,7 @@
 
 #include<unistd.h>
 #include<cstdint>
+#include<string>
 
 typedef struct Process_Identity{
        pid_t PID;                  // Process ID 
@@ -23,7 +24,7 @@ typedef enum state{
 typedef struct Raw_Data{
        pid_t pid;                            // Process PID 
        pid_t ppid;                           // process's parent id
-       char *proc_name;                      // process name
+       std::string proc_name;                      // process name
        char state;                     // process state
 
        uint64_t RSS;                         // Resident Set Size - physical memory currently occupied by the process
