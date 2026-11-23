@@ -10,12 +10,8 @@
 
 using namespace std;
 
-void min_sec(std::string time){
-
-}
-
 int extract_info(){
-    int count = 0;
+    //int count = 0;
 
     system("touch new.txt && ps -eo pid=,etimes= >> new.txt");
 
@@ -34,7 +30,7 @@ int extract_info(){
     }
 
     cout<<"PID"<<"     "<<"ELAPSED"<<endl;
-    for(int i=0 ; i<proc_count ; i++){
+    for(size_t i=0 ; i<proc_count ; i++){
         cout<<proc_info[i].PID<<"      "<<proc_info[i].e_time<<'\n';
     }
 
@@ -44,7 +40,7 @@ int extract_info(){
         std::string command = "cat /proc/" + std::to_string(proc_info[i].PID) + "/status >> info.txt";
         system(command.c_str());
 
-        std::ifstream files("info.txt" , std::ios::ftrunc);
+        std::ifstream files("info.txt" , std::ios::trunc);
 
         std::string info_line;
         
@@ -54,15 +50,21 @@ int extract_info(){
             size_t i = 0;
             while(info_line.at(i) != ':'){
                 word.push_back(info_line.at(i));
+                i++;
             }
             i--;
 
             word.at(i) = '\0';
 
+            while(info_line.at(i) == ' '){
+                i++;
+            }
+
             string value;
-            i = i+2;
+        
             while(i < len && (info_line.at(i) != 'k' || info_line.at(i) != ' ' || info_line.at(i) != '\n')){
                 value.push_back(info_line.at(i));
+                i++;
             }
 
 
@@ -76,7 +78,7 @@ int extract_info(){
                 process_log[nproc].ppid = static_cast<pid_t>(std::stoi(value));
             }
             else if(word == "state"){
-                process_log[nproc].state = static_cast<char>(value);
+                process_log[nproc].state = value[0];
             }
             else if(word == "VmRSS"){
                 process_log[nproc].RSS = static_cast<uint64_t>(std::stoll(value));
@@ -100,7 +102,7 @@ int extract_info(){
             nproc++;
 
         }
-        cout<<"PROCESS PID : "<<process_log[0].pid<<endl<<"PPID : "<<process_log[0].ppid<<endl;
+        cout<<"PROCESS PID : "<<process_log[i].pid<<endl<<"PPID : "<<process_log[i].ppid<<endl;
 
         files.close();
 
