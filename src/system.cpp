@@ -40,7 +40,7 @@ int extract_info(){
         std::string command = "cat /proc/" + std::to_string(proc_info[i].PID) + "/status >> info.txt";
         system(command.c_str());
 
-        std::ifstream files("info.txt" , std::ios::trunc);
+        std::ifstream files("info.txt");
 
         std::string info_line;
         
@@ -52,9 +52,8 @@ int extract_info(){
                 word.push_back(info_line.at(i));
                 i++;
             }
-            i--;
 
-            word.at(i) = '\0';
+            
 
             while(info_line.at(i) == ' '){
                 i++;
@@ -62,22 +61,22 @@ int extract_info(){
 
             string value;
         
-            while(i < len && (info_line.at(i) != 'k' || info_line.at(i) != ' ' || info_line.at(i) != '\n')){
+            while(i < len && info_line.at(i) != '\n'){
                 value.push_back(info_line.at(i));
                 i++;
             }
 
 
-            if(word == "name"){
+            if(word == "Name"){
                 process_log[nproc].proc_name = value;    
             }
-            else if(word == "pid"){
+            else if(word == "Pid"){
                 process_log[nproc].pid = static_cast<pid_t>(std::stoi(value));
             }
-            else if(word == "ppid"){
+            else if(word == "PPid"){
                 process_log[nproc].ppid = static_cast<pid_t>(std::stoi(value));
             }
-            else if(word == "state"){
+            else if(word == "State"){
                 process_log[nproc].state = value[0];
             }
             else if(word == "VmRSS"){
@@ -89,13 +88,13 @@ int extract_info(){
             else if(word == "VmSwap"){
                 process_log[nproc].Vm_Swap = static_cast<uint64_t>(std::stoll(value));
             }
-            else if(word == "RSSAnon"){
+            else if(word == "RssAnon"){
                 process_log[nproc].RSS_anon = static_cast<uint64_t>(std::stoll(value));
             }
-            else if(word == "RSS_File"){
+            else if(word == "RssFile"){
                 process_log[nproc].Rss_File = static_cast<uint64_t>(std::stoll(value));
             }
-            else if(word == "RSS_Shmmem"){
+            else if(word == "RssShmem"){
                 process_log[nproc].Rss_Shmmem = static_cast<uint64_t>(std::stoll(value));
             }
 
@@ -104,11 +103,11 @@ int extract_info(){
         }
         cout<<"PROCESS PID : "<<process_log[i].pid<<endl<<"PPID : "<<process_log[i].ppid<<endl;
 
+        system("truncate -s 0 info.txt");
+
         files.close();
 
     }
-
-    
     
     file.close();
 
