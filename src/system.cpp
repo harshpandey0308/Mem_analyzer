@@ -37,7 +37,7 @@ int extract_info(){
     system("touch info.txt");
 
     for(size_t i=0 ; i<proc_count ; i++){
-        std::string command = "cat /proc/" + std::to_string(proc_info[i].PID) + "/status >> info.txt";
+        std::string command = "grep -E '^(Name|Pid|PPid|State|VmRSS|VmSize|VmSwap|RssAnon|RssFile|RssShmem):' /proc/" + std::to_string(proc_info[i].PID) + "/status >> info.txt";
         system(command.c_str());
 
         std::ifstream files("info.txt");
@@ -52,8 +52,6 @@ int extract_info(){
                 word.push_back(info_line.at(i));
                 i++;
             }
-
-            
 
             while(info_line.at(i) == ' '){
                 i++;
@@ -103,9 +101,9 @@ int extract_info(){
         }
         cout<<"PROCESS PID : "<<process_log[i].pid<<endl<<"PPID : "<<process_log[i].ppid<<endl;
 
-        system("truncate -s 0 info.txt");
-
         files.close();
+
+        system("truncate -s 0 info.txt");
 
     }
     
